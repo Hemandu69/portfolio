@@ -29,19 +29,15 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto mt-14 flex max-w-6xl flex-col gap-3 text-mute-dim md:flex-row md:items-center md:justify-between">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-0.5">
           <span
             title="okay, you found this one"
-            style={{ fontSize: "clamp(0.875rem, 1.15vw, 1.0625rem)" }}
-            className="font-mono italic leading-relaxed text-mute-dim"
+            className="font-mono text-[13px] italic leading-relaxed text-mute-dim md:text-[14px]"
           >
             {jokes.footer}
           </span>
           {jokes.footerSub && (
-            <span
-              style={{ fontSize: "clamp(0.8125rem, 1.05vw, 0.975rem)" }}
-              className="font-mono text-mute-dim/70 italic leading-relaxed"
-            >
+            <span className="font-mono text-[12px] italic leading-relaxed text-mute-dim/70 md:text-[13px]">
               {jokes.footerSub}
             </span>
           )}
