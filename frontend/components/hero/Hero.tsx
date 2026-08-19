@@ -49,24 +49,18 @@ export default function Hero() {
         {/* Desktop portrait — asymmetrical, overlapping typography (hidden on mobile) */}
         <motion.div
           style={{ y: portraitY, scale: portraitScale, opacity: portraitOpacity }}
-          className="hidden md:block md:absolute md:right-[6%] md:top-[8%] md:h-[86%] md:w-[38%] lg:right-[8%] lg:w-[36%]"
+          className="hidden md:block md:absolute md:right-[5%] md:top-[9%] md:h-[82%] md:w-[36%] lg:right-[7%] lg:top-[9%] lg:h-[82%] lg:w-[33%]"
         >
-          <div className="relative h-full w-full">
+          <div className="relative h-full w-full overflow-hidden rounded-[14px] border border-white/[0.08] [isolation:isolate]">
             <Image
               src="/images/portrait.jpeg"
               alt="Hemandu Tapraniya"
               fill
               priority
-              className="object-cover object-[60%_20%] grayscale-[35%] contrast-[1.05]"
-              style={{
-                maskImage:
-                  "linear-gradient(to bottom, black 82%, transparent 100%)",
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, black 82%, transparent 100%)",
-              }}
-              sizes="40vw"
+              className="object-cover object-[60%_20%] grayscale-[30%] contrast-[1.05]"
+              sizes="(min-width: 1024px) 33vw, 36vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           </div>
         </motion.div>
 
