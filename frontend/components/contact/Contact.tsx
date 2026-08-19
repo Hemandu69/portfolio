@@ -7,9 +7,72 @@ import { contactEasterEggs } from "@/data/portfolio";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+function getEmailValidationError(email: string): string | null {
+  const trimmed = email.trim();
+
+  // 1. Empty email
+  if (!trimmed) {
+    return "Your email is required. Unfortunately, telepathy isn't supported yet.";
+  }
+
+  // 2. Spaces in the email
+  if (/\s/.test(email)) {
+    return "The space has entered the chat. Please remove it.";
+  }
+
+  // 3. Consecutive dots
+  if (/\.\./.test(trimmed)) {
+    return "Two dots? Your email is trying to start a new paragraph.";
+  }
+
+  // 4. Missing @
+  if (!trimmed.includes("@")) {
+    return "That email is missing an @. Even emails need directions.";
+  }
+
+  const parts = trimmed.split("@");
+  if (parts.length > 2) {
+    return "Nice try. That's a username wearing an email costume.";
+  }
+
+  const [localPart, domainPart] = parts;
+
+  // Local part empty (e.g. "@gmail.com")
+  if (!localPart) {
+    return "Nice try. That's a username wearing an email costume.";
+  }
+
+  // 5. Missing domain after @ (e.g. "hello@")
+  if (!domainPart) {
+    return "Your email forgot where it lives.";
+  }
+
+  // Domain missing a dot (e.g. "hello@gmail")
+  if (!domainPart.includes(".")) {
+    return "Your email forgot where it lives.";
+  }
+
+  const domainSubparts = domainPart.split(".");
+  const tld = domainSubparts[domainSubparts.length - 1];
+
+  // 6. Domain extension too short / incomplete (e.g. "hello@gmail.c")
+  if (!tld || tld.length < 2) {
+    return "That's a little too short to be an email address.";
+  }
+
+  // 7. General RFC standard email regex check
+  const standardEmailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z0-9-]{2,}$/;
+  if (!standardEmailRegex.test(trimmed)) {
+    return "That email looks suspiciously unfinished.";
+  }
+
+  return null;
+}
+
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [msgIdx, setMsgIdx] = useState(0);
   const shouldReduceMotion = useReducedMotion();
 
@@ -27,6 +90,15 @@ export default function Contact() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (status === "sending") return;
+
+    // Validate email before sending
+    const validationError = getEmailValidationError(form.email);
+    if (validationError) {
+      setEmailError(validationError);
+      return;
+    }
+    setEmailError(null);
+
     setStatus("sending");
     try {
       const baseUrl =
@@ -83,6 +155,7 @@ export default function Contact() {
             {status !== "sent" ? (
               <motion.form
                 key="form"
+                noValidate
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.4 }}
                 onSubmit={handleSubmit}
@@ -98,7 +171,19 @@ export default function Contact() {
                   label="Email"
                   type="email"
                   value={form.email}
-                  onChange={(v) => setForm((f) => ({ ...f, email: v }))}
+                  onChange={(v) => {
+                    setForm((f) => ({ ...f, email: v }));
+                    if (emailError) {
+                      const err = getEmailValidationError(v);
+                      if (!err) setEmailError(null);
+                    }
+                  }}
+                  onBlur={() => {
+                    if (form.email) {
+                      setEmailError(getEmailValidationError(form.email));
+                    }
+                  }}
+                  error={emailError}
                   required
                 />
                 <Field
@@ -170,39 +255,60 @@ function Field({
   label,
   value,
   onChange,
+  onBlur,
   type = "text",
   textarea,
   required,
+  error,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
+  onBlur?: () => void;
   type?: string;
   textarea?: boolean;
   required?: boolean;
+  error?: string | null;
 }) {
   return (
-    <label className="group flex flex-col gap-2 border-b border-line pb-3 focus-within:border-lavender">
-      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-mute-dim">
-        {label}
-      </span>
-      {textarea ? (
-        <textarea
-          required={required}
-          value={value}
-          rows={2}
-          onChange={(e) => onChange(e.target.value)}
-          className="resize-none bg-transparent font-display text-xl text-paper outline-none placeholder:text-mute-dim md:text-2xl"
-        />
-      ) : (
-        <input
-          required={required}
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="bg-transparent font-display text-xl text-paper outline-none placeholder:text-mute-dim md:text-2xl"
-        />
-      )}
-    </label>
+    <div className="flex flex-col gap-1.5">
+      <label className={`group flex flex-col gap-2 border-b pb-3 transition-colors ${error ? "border-rust" : "border-line focus-within:border-lavender"}`}>
+        <span className={`font-mono text-[10px] uppercase tracking-[0.2em] transition-colors ${error ? "text-rust" : "text-mute-dim group-focus-within:text-lavender"}`}>
+          {label}
+        </span>
+        {textarea ? (
+          <textarea
+            required={required}
+            value={value}
+            rows={2}
+            onChange={(e) => onChange(e.target.value)}
+            onBlur={onBlur}
+            className="resize-none bg-transparent font-display text-xl text-paper outline-none placeholder:text-mute-dim md:text-2xl"
+          />
+        ) : (
+          <input
+            required={required}
+            type={type}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            onBlur={onBlur}
+            className="bg-transparent font-display text-xl text-paper outline-none placeholder:text-mute-dim md:text-2xl"
+          />
+        )}
+      </label>
+      <AnimatePresence>
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2 }}
+            className="font-mono text-xs text-rust"
+          >
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
