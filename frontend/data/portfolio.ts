@@ -184,6 +184,29 @@ export const overthinkerVariations = [
   "Professional overthinker. Part-time bug creator.",
 ];
 
+export const heroStatusLines = [
+  "I probably have too many tabs open right now.",
+  "I swear this worked five minutes ago.",
+  "Currently pretending I understand the codebase.",
+  "One more feature. Then I'm done. Probably.",
+  "Turning caffeine into questionable architecture.",
+  "Currently blaming the cache.",
+  "It works on my machine. That's all I know.",
+  "Writing code. Deleting code. Calling it progress.",
+  "Currently avoiding the one bug I definitely need to fix.",
+  "Somewhere between 'easy fix' and 'rewrite everything.'",
+  "My browser history knows too much.",
+  "Currently negotiating with TypeScript.",
+  "Building things I probably didn't need to build.",
+  "I came for the bug. I stayed for the side quest.",
+  "Making problems so I can solve them later.",
+  "Deploy first. Understand later. Kidding. Mostly.",
+  "Currently waiting for npm to tell me what's wrong.",
+  "I have a plan. It is not a good plan.",
+  "Professional overthinker, amateur sleep enthusiast.",
+  "Still somehow shipping code.",
+];
+
 export const contactEasterEggs = [
   "Yes, I actually read these. Usually.",
   "Go ahead. I promise I'm not ignoring you.",

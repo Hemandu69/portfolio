@@ -1,12 +1,25 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { person, jokes } from "@/data/portfolio";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { person, heroStatusLines } from "@/data/portfolio";
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+  const [statusIdx, setStatusIdx] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+
+    const interval = setInterval(() => {
+      setStatusIdx((prev) => (prev + 1) % heroStatusLines.length);
+    }, 2800);
+
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -93,12 +106,23 @@ export default function Hero() {
             <span>{person.year}</span>
           </motion.div>
 
-          <motion.p
+          <motion.div
             style={{ opacity: metaOpacity }}
-            className="mt-4 max-w-sm font-mono text-[10px] italic leading-relaxed tracking-wide text-mute-dim md:mt-6"
+            className="mt-4 min-h-[1.75rem] max-w-sm flex items-center md:mt-6"
           >
-            {jokes.hero}
-          </motion.p>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={statusIdx}
+                initial={shouldReduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35 }}
+                className="font-mono text-[10px] italic leading-relaxed tracking-wide text-mute-dim"
+              >
+                {heroStatusLines[statusIdx]}
+              </motion.p>
+            </AnimatePresence>
+          </motion.div>
 
           {/* Mobile portrait — controlled aspect ratio beneath content (hidden on desktop) */}
           <motion.div
