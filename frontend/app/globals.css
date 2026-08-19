@@ -87,12 +87,19 @@ button {
   outline-offset: 4px;
 }
 
-html.cursor-ready,
-html.cursor-ready * {
-  cursor: none !important;
+@media (pointer: fine) {
+  html.cursor-ready,
+  html.cursor-ready * {
+    cursor: none !important;
+  }
+
+  html.cursor-ready input,
+  html.cursor-ready textarea {
+    cursor: text !important;
+  }
 }
 
-@media (max-width: 860px), (pointer: coarse) {
+@media (pointer: coarse), (hover: none) {
   html.cursor-ready,
   html.cursor-ready * {
     cursor: auto !important;
