@@ -82,7 +82,7 @@ export default function CustomCursor() {
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[9999] flex items-center justify-center"
+      className="pointer-events-none fixed left-0 top-0 z-[99999] flex items-center justify-center"
       style={{
         x: sx,
         y: sy,

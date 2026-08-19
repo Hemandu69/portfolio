@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
@@ -27,7 +27,7 @@ export default function EasterEggToast() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 15, scale: shouldReduceMotion ? 1 : 0.95 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed bottom-6 right-6 z-[10001] w-[calc(100vw-3rem)] max-w-sm overflow-hidden rounded-xl border border-line-strong/80 bg-black/95 p-5 font-mono shadow-2xl backdrop-blur-md text-paper sm:max-w-md"
+          className="fixed bottom-6 right-6 z-[8000] w-[calc(100vw-3rem)] max-w-sm overflow-hidden rounded-xl border border-line-strong/80 bg-black/95 p-5 font-mono shadow-2xl backdrop-blur-md text-paper sm:max-w-md"
         >
           {/* Header */}
           <div className="flex items-start justify-between border-b border-line-strong/40 pb-3">

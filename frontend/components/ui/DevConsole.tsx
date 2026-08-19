@@ -295,7 +295,7 @@ Unfortunately, nobody knows what the question was.`;
           exit={{ opacity: 0 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md sm:p-6 md:p-10"
+          className="fixed inset-0 z-[9000] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md sm:p-6 md:p-10"
         >
           {/* Main Modal Container */}
           <motion.div
