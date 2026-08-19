@@ -1,0 +1,183 @@
+export const person = {
+  name: "Hemandu Tapraniya",
+  first: "Hemandu",
+  role: "Full Stack Developer · AI & ML Student",
+  location: "India",
+  year: "2026",
+  github: "https://github.com/Hemandu69",
+  linkedin: "https://linkedin.com/in/hemendu-tapraniya-69786030a",
+  email: "hello@hemandu.com",
+};
+
+export const navLinks = [
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
+  { label: "Say Hi", href: "#contact" },
+];
+
+export const buildCategories = [
+  {
+    index: "01",
+    title: "Full Stack",
+    lines: ["Next.js.", "React.", "TypeScript.", "Node.", "Express.", "REST APIs."],
+  },
+  {
+    index: "02",
+    title: "AI / ML",
+    lines: ["B.Tech in AI & ML.", "Gemini API.", "AI-powered features.", "Still a student of it."],
+  },
+  {
+    index: "03",
+    title: "Whatever seems interesting",
+    lines: [
+      "Side projects, experiments, questionable ideas, and things I probably could have just left alone.",
+    ],
+  },
+];
+
+export type ProjectLink = {
+  label: string;
+  url: string;
+};
+
+export type Project = {
+  id: string;
+  index: string;
+  title: string[];
+  description: string;
+  tech: string[];
+  tone: "lavender" | "rust" | "mute";
+  status?: string;
+  note?: string;
+  link?: ProjectLink;
+  links?: ProjectLink[];
+  images?: string[];
+};
+
+export const projects: Project[] = [
+  {
+    id: "quick-notes",
+    index: "01",
+    title: ["QUICK", "NOTES"],
+    description:
+      "I kept losing notes, so I built an app to lose them more efficiently. A local-first Android notes app with fast search, folders, tags, reminders, attachments, and offline backups.",
+    tech: ["ANDROID", "KOTLIN", "ROOM / SQLITE", "LOCAL-FIRST", "OFFLINE"],
+    tone: "lavender",
+    status: "V1.0 · ANDROID · LOCAL-FIRST",
+    note: "v1.0 shipped. Naturally, I immediately started changing it.",
+    images: [
+      "/projects/quick-notes/quick-notes-editor.jpg",
+      "/projects/quick-notes/quick-notes-settings.jpg",
+    ],
+    links: [
+      {
+        label: "VIEW SOURCE ↗",
+        url: "https://github.com/Hemandu69/notes-and-cliboard-app",
+      },
+      {
+        label: "DOWNLOAD v1 ↗",
+        url: "https://github.com/Hemandu69/notes-and-cliboard-app/releases",
+      },
+    ],
+  },
+  {
+    id: "manga",
+    index: "02",
+    title: ["MANGA", "PLATFORM"],
+    description:
+      "I wanted a manga platform, so naturally I decided building one was easier than finding one.",
+    tech: ["NEXT.JS", "TYPESCRIPT", "CLOUDFLARE R2", "GITHUB ACTIONS", "DOCKER", "CI/CD"],
+    tone: "rust",
+    status: "BETA · ACTIVELY DEVELOPING",
+    note: "Currently in beta. Please report bugs before I convince myself they're features.",
+    images: [
+      "/projects/manga-platform/manga-home.png",
+      "/projects/manga-platform/manga-discover.png",
+    ],
+    link: {
+      label: "VIEW BETA ↗",
+      url: "https://manga-beta.hemandu.com/",
+    },
+  },
+];
+
+export {
+  techEcosystem,
+  aiSpotlight,
+  editorialCategories,
+  architecturalRange,
+} from "./techData";
+
+export const techStack = [
+  "Next.js",
+  "React",
+  "TypeScript",
+  "JavaScript",
+  "Node.js",
+  "Express",
+  "MongoDB",
+  "Python",
+  "MySQL",
+  "Redis",
+  "Tailwind",
+  "Socket.IO",
+  "Docker",
+  "Git",
+  "Firebase",
+];
+
+export const skillsJoke =
+  "The stuff between an empty repository and something that actually runs in production.";
+
+export const experience = [
+  {
+    year: "2026",
+    role: "Full Stack Development Intern",
+    org: "Digital India Corporation",
+    detail:
+      "Shipped features with Next.js, TypeScript and REST APIs, wired WordPress content and CDN assets into the frontend, and kept GitHub Actions honest across beta and production. Turns out production is just development with witnesses.",
+  },
+  {
+    year: "2023–27",
+    role: "B.Tech, Artificial Intelligence & Machine Learning",
+    org: "GGSIPU — University School of Automation & Robotics",
+    detail: "Currently in progress. Ask me again in 2027.",
+  },
+  {
+    year: "2021–23",
+    role: "Senior Secondary (Class XI - XII)",
+    org: "Kendriya Vidyalaya Andrews Ganj, New Delhi",
+    detail: "Spent years learning things I was told I'd definitely use later. The 'later' is taking its time.",
+  },
+];
+
+export const currently = [
+  { label: "Building", value: "something that started as a five-minute idea" },
+  { label: "Learning", value: "something I will definitely overcomplicate" },
+  { label: "Watching", value: "one more episode. allegedly." },
+  { label: "Status", value: "pretending the bug is reproducible" },
+];
+
+export const contactEasterEggs = [
+  "Yes, I actually read these. Usually.",
+  "Go ahead. I promise I'm not ignoring you.",
+  "If you made it this far, you probably have something to say.",
+  "This is your sign to stop thinking about it and hit send.",
+  "You can say hi. I don't bite.",
+  "Your message has been invited. The rest is up to you.",
+  'No formality required. "Hey" works.',
+  "Yes, this is a real inbox. Your move.",
+  "I promise there's a human on the other side of this.",
+  "No need to overthink it. I already did.",
+];
+
+export const jokes = {
+  hero: "I probably have too many tabs open right now.",
+  about:
+    "I like building things that start as questionable ideas and somehow end up three weeks later than planned.",
+  experience: "Learned that \"works on my machine\" is not a deployment strategy.",
+  projectsIntro: "Started simple. Obviously.",
+  contactFooter: "No need to overthink it. I already did.",
+  footer: "Built with questionable decisions and unnecessary attention to detail.",
+  footerSub: "The bugs were not consulted during production.",
+};

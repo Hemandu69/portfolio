@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  --color-black: #0b0a0c;
+  --color-graphite: #131217;
+  --color-graphite-2: #0f0e12;
+  --color-paper: #f2eee8;
+  --color-mute: #9a938c;
+  --color-mute-dim: #5f5a56;
+  --color-lavender: #a99cc2;
+  --color-lavender-dim: #6f6580;
+  --color-rust: #bd8a5c;
+  --color-line: rgba(242, 238, 232, 0.1);
+  --color-line-strong: rgba(242, 238, 232, 0.18);
+}
+
+@theme inline {
+  --color-black: var(--color-black);
+  --color-graphite: var(--color-graphite);
+  --color-graphite-2: var(--color-graphite-2);
+  --color-paper: var(--color-paper);
+  --color-mute: var(--color-mute);
+  --color-mute-dim: var(--color-mute-dim);
+  --color-lavender: var(--color-lavender);
+  --color-lavender-dim: var(--color-lavender-dim);
+  --color-rust: var(--color-rust);
+  --color-line: var(--color-line);
+  --color-line-strong: var(--color-line-strong);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-black);
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--color-black);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-lavender);
+  color: var(--color-black);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-lavender);
+  outline-offset: 4px;
+}
+
+html.cursor-ready,
+html.cursor-ready * {
+  cursor: none !important;
+}
+
+@media (max-width: 860px), (pointer: coarse) {
+  html.cursor-ready,
+  html.cursor-ready * {
+    cursor: auto !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
