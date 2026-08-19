@@ -26,17 +26,17 @@ export default function Hero() {
   const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.4]);
 
   return (
-    <section id="top" ref={ref} className="relative h-[190vh]">
-      <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
+    <section id="top" ref={ref} className="relative min-h-[100dvh] md:h-[190vh]">
+      <div className="relative flex min-h-[100dvh] w-full flex-col justify-between px-6 pt-24 pb-8 sm:px-10 md:sticky md:top-0 md:h-screen md:flex-row md:items-center md:overflow-hidden md:px-16 md:py-0">
         <motion.div
           style={{ opacity: bgOpacity }}
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_38%,rgba(169,156,194,0.10),transparent_58%)]"
         />
 
-        {/* portrait — asymmetrical, overlapping typography */}
+        {/* Desktop portrait — asymmetrical, overlapping typography (hidden on mobile) */}
         <motion.div
           style={{ y: portraitY, scale: portraitScale, opacity: portraitOpacity }}
-          className="absolute right-[-6%] top-[8%] h-[86%] w-[62%] sm:right-[2%] sm:w-[46%] md:right-[6%] md:w-[38%]"
+          className="hidden md:block md:absolute md:right-[6%] md:top-[8%] md:h-[86%] md:w-[38%] lg:right-[8%] lg:w-[36%]"
         >
           <div className="relative h-full w-full">
             <Image
@@ -51,37 +51,38 @@ export default function Hero() {
                 WebkitMaskImage:
                   "linear-gradient(to bottom, black 82%, transparent 100%)",
               }}
-              sizes="(max-width: 768px) 70vw, 40vw"
+              sizes="40vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
           </div>
         </motion.div>
 
-        <div className="relative z-10 w-full px-6 sm:px-10 md:px-16">
+        {/* Hero Typography & Content */}
+        <div className="relative z-10 w-full md:max-w-[62%] lg:max-w-[58%]">
           <motion.div
             style={{ opacity: metaOpacity, y: metaY }}
-            className="mb-4 font-mono text-[11px] uppercase tracking-[0.25em] text-mute md:mb-6"
+            className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-mute sm:text-[11px] md:mb-6"
           >
             01 / {person.name.toUpperCase()}
           </motion.div>
 
           <motion.h1
             style={{ y: titleY, scale: titleScale, opacity: titleOpacity }}
-            className="origin-left font-display text-[19vw] font-light leading-[0.82] tracking-tight text-paper sm:text-[15vw] md:text-[13vw] lg:text-[11.5vw]"
+            className="origin-left font-display text-[13.5vw] font-light leading-[0.88] tracking-tight text-paper sm:text-[14vw] md:text-[13vw] lg:text-[11.5vw]"
           >
             HEMANDU
           </motion.h1>
 
           <motion.p
             style={{ y: titleY, opacity: titleOpacity }}
-            className="mt-3 max-w-md font-display text-[9vw] italic leading-[0.95] text-mute sm:text-[6vw] md:mt-4 md:text-[4vw] lg:text-[3.2vw]"
+            className="mt-2.5 max-w-md font-display text-[6.5vw] italic leading-[0.95] text-mute sm:text-[5.5vw] md:mt-4 md:text-[4vw] lg:text-[3.2vw]"
           >
             I build things.
           </motion.p>
 
           <motion.div
             style={{ opacity: metaOpacity }}
-            className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.2em] text-mute-dim md:mt-10"
+            className="mt-5 flex flex-wrap items-center gap-x-3.5 gap-y-1.5 font-mono text-[9.5px] uppercase tracking-[0.18em] text-mute-dim sm:gap-x-5 sm:text-[10px] md:mt-10"
           >
             <span>Full Stack</span>
             <span className="h-1 w-1 rounded-full bg-line-strong" />
@@ -94,15 +95,34 @@ export default function Hero() {
 
           <motion.p
             style={{ opacity: metaOpacity }}
-            className="mt-6 font-mono text-[10px] italic tracking-wide text-mute-dim"
+            className="mt-4 max-w-sm font-mono text-[10px] italic leading-relaxed tracking-wide text-mute-dim md:mt-6"
           >
             {jokes.hero}
           </motion.p>
+
+          {/* Mobile portrait — controlled aspect ratio beneath content (hidden on desktop) */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative mt-7 aspect-[4/5] w-full max-w-[240px] xs:max-w-[260px] sm:max-w-[280px] overflow-hidden rounded-xl border border-line-strong/60 shadow-2xl md:hidden"
+          >
+            <Image
+              src="/images/portrait.jpeg"
+              alt="Hemandu Tapraniya"
+              fill
+              priority
+              className="object-cover object-[60%_20%] grayscale-[30%] contrast-[1.05]"
+              sizes="(max-width: 768px) 280px, 40vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          </motion.div>
         </div>
 
+        {/* Scroll indicator */}
         <motion.div
           style={{ opacity: metaOpacity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[9px] uppercase tracking-[0.3em] text-mute-dim"
+          className="mt-6 flex justify-center font-mono text-[9px] uppercase tracking-[0.3em] text-mute-dim md:absolute md:bottom-8 md:left-1/2 md:mt-0 md:-translate-x-1/2"
         >
           scroll
         </motion.div>
