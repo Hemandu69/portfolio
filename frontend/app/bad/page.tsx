@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import CustomCursor from "@/components/cursor/CustomCursor";
+import EasterEggTrigger from "@/components/easter-eggs/EasterEggTrigger";
 
 interface BadIterationConfig {
   id: number;
@@ -235,7 +236,9 @@ export default function BadPage() {
             Hemandu
           </Link>
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-rust">
-            YOU WERE WARNED.
+            <EasterEggTrigger id="egg-bad-header">
+              YOU WERE WARNED.
+            </EasterEggTrigger>
           </span>
         </header>
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { contactEasterEggs } from "@/data/portfolio";
+import EasterEggTrigger from "@/components/easter-eggs/EasterEggTrigger";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -232,7 +233,7 @@ export default function Contact() {
         >
           Alright.
           <br />
-          Your turn.
+          <EasterEggTrigger id="egg-contact-heading">Your turn.</EasterEggTrigger>
         </motion.h2>
 
         <motion.p

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
@@ -198,6 +198,34 @@ One probably should not exist.`;
 
 You are not getting root access.`;
         break;
+
+      case "eggs": {
+        let discovered = 0;
+        try {
+          const saved = localStorage.getItem("hemandu-easter-eggs");
+          if (saved) discovered = JSON.parse(saved).length;
+        } catch {
+          // ignore
+        }
+        const total = 10;
+        response = `EASTER EGG DATABASE
+
+Status:
+Classified
+
+Reason:
+Because you cannot be trusted.
+
+Known discoveries:
+${discovered}
+
+Remaining:
+${Math.max(0, total - discovered)}
+
+Recommendation:
+Go outside.`;
+        break;
+      }
 
       case "clear":
         setLogs([]);

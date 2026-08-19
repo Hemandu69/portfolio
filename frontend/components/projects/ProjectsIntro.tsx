@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { jokes } from "@/data/portfolio";
+import EasterEggTrigger from "@/components/easter-eggs/EasterEggTrigger";
 
 export default function ProjectsIntro() {
   return (
@@ -24,7 +25,9 @@ export default function ProjectsIntro() {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="font-mono text-[11px] italic text-mute-dim"
       >
-        {jokes.projectsIntro}
+        <EasterEggTrigger id="egg-projects-label">
+          {jokes.projectsIntro}
+        </EasterEggTrigger>
       </motion.p>
     </section>
   );

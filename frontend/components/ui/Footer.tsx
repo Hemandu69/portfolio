@@ -1,6 +1,7 @@
 "use client";
 
 import { person, jokes } from "@/data/portfolio";
+import EasterEggTrigger from "@/components/easter-eggs/EasterEggTrigger";
 
 export default function Footer() {
   return (
@@ -34,7 +35,7 @@ export default function Footer() {
             title="okay, you found this one"
             className="font-mono text-[13px] italic leading-relaxed text-mute-dim md:text-[14px]"
           >
-            {jokes.footer}
+            <EasterEggTrigger id="egg-footer-copy">{jokes.footer}</EasterEggTrigger>
           </span>
           {jokes.footerSub && (
             <span className="font-mono text-[12px] italic leading-relaxed text-mute-dim/70 md:text-[13px]">
@@ -43,7 +44,9 @@ export default function Footer() {
           )}
         </div>
         <span className="font-mono text-[10px]">
-          © {person.year} {person.name}
+          <EasterEggTrigger id="egg-footer-copyright">
+            © {person.year} {person.name}
+          </EasterEggTrigger>
         </span>
       </div>
     </footer>

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import DevConsole from "@/components/ui/DevConsole";
+import { EasterEggProvider } from "@/components/easter-eggs/EasterEggContext";
+import EasterEggToast from "@/components/easter-eggs/EasterEggToast";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -38,8 +40,11 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable} h-full`}
     >
       <body className="min-h-full bg-black text-paper">
-        {children}
-        <DevConsole />
+        <EasterEggProvider>
+          {children}
+          <DevConsole />
+          <EasterEggToast />
+        </EasterEggProvider>
       </body>
     </html>
   );

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import CustomCursor from "@/components/cursor/CustomCursor";
+import EasterEggTrigger from "@/components/easter-eggs/EasterEggTrigger";
 
 const notFoundJokes = [
   "The page has left the building.",
@@ -62,7 +63,9 @@ export default function NotFound() {
             Hemandu
           </Link>
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-mute-dim">
-            404 / NOT FOUND
+            <EasterEggTrigger id="egg-404-header">
+              404 / NOT FOUND
+            </EasterEggTrigger>
           </span>
         </header>
 

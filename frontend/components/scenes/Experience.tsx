@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { experience } from "@/data/portfolio";
+import EasterEggTrigger from "@/components/easter-eggs/EasterEggTrigger";
 
 export default function Experience() {
   return (
@@ -22,7 +23,9 @@ export default function Experience() {
               </span>
               {"period" in e && e.period && (
                 <span className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-mute-dim">
-                  {e.period}
+                  <EasterEggTrigger id="egg-experience-label">
+                    {e.period}
+                  </EasterEggTrigger>
                 </span>
               )}
             </div>

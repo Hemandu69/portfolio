@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { currently } from "@/data/portfolio";
+import EasterEggTrigger from "@/components/easter-eggs/EasterEggTrigger";
 
 export default function Currently() {
   return (
@@ -13,7 +14,9 @@ export default function Currently() {
         transition={{ duration: 0.8 }}
         className="mb-14 font-mono text-xs uppercase tracking-[0.3em] text-mute-dim md:mb-20"
       >
-        Currently
+        <EasterEggTrigger id="egg-currently-heading">
+          Currently
+        </EasterEggTrigger>
       </motion.h2>
 
       <div className="mx-auto grid max-w-4xl grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2">

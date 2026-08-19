@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { person, heroStatusLines } from "@/data/portfolio";
 
+import EasterEggTrigger from "@/components/easter-eggs/EasterEggTrigger";
+
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const [statusIdx, setStatusIdx] = useState(0);
@@ -114,7 +116,9 @@ export default function Hero() {
                 style={{ fontSize: "clamp(0.875rem, 1.15vw, 1.125rem)" }}
                 className="font-mono italic leading-relaxed tracking-wide text-mute-dim"
               >
-                {heroStatusLines[statusIdx]}
+                <EasterEggTrigger id="egg-hero-status">
+                  {heroStatusLines[statusIdx]}
+                </EasterEggTrigger>
               </motion.p>
             </AnimatePresence>
           </motion.div>
