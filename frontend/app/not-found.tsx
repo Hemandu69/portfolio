@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import CustomCursor from "@/components/cursor/CustomCursor";
@@ -66,28 +67,36 @@ export default function NotFound() {
         </header>
 
         {/* Center Content */}
-        <div className="relative z-10 my-auto flex max-w-4xl flex-col py-12 md:py-16">
-          {/* Asymmetric 404 Accent Number */}
-          <motion.div
+        <div className="relative z-10 my-auto flex max-w-4xl flex-col py-8 md:py-12">
+          {/* Main Heading */}
+          <motion.h1
             custom={0}
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="select-none font-display text-[22vw] font-light leading-none tracking-tighter text-white/[0.06] sm:text-[16vw] md:text-[12vw]"
+            className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            404
-          </motion.div>
+            Well. This wasn&rsquo;t supposed to happen.
+          </motion.h1>
 
-          {/* Main Heading */}
-          <motion.h1
+          {/* SpongeBob Awkward GIF */}
+          <motion.div
             custom={1}
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="-mt-4 font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:-mt-8 md:text-6xl lg:text-7xl"
+            className="my-6 max-w-[200px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl xs:max-w-[240px] sm:max-w-[260px] md:my-8 md:max-w-[280px]"
           >
-            Well. This wasn&rsquo;t supposed to happen.
-          </motion.h1>
+            <Image
+              src="/images/spongebob-awkward.gif"
+              alt="Awkward SpongeBob"
+              width={280}
+              height={210}
+              unoptimized
+              data-cursor="AWKWARD"
+              className="h-auto w-full object-cover grayscale-[20%] contrast-[1.05]"
+            />
+          </motion.div>
 
           {/* Supporting Text & Joke */}
           <motion.div
@@ -95,7 +104,7 @@ export default function NotFound() {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="mt-6 flex max-w-xl flex-col gap-3 text-mute md:mt-8"
+            className="flex max-w-xl flex-col gap-3 text-mute"
           >
             <p className="text-sm leading-relaxed sm:text-base md:text-lg">
               You somehow found a page that doesn&rsquo;t exist. Honestly, impressive.
@@ -111,7 +120,7 @@ export default function NotFound() {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="mt-10 flex flex-wrap items-center gap-4 sm:gap-6 md:mt-12"
+            className="mt-8 flex flex-wrap items-center gap-4 sm:gap-6 md:mt-10"
           >
             <Link
               href="/"
@@ -126,7 +135,7 @@ export default function NotFound() {
             </Link>
 
             <Link
-              href="/"
+              href="/bad"
               data-cursor="WHY?"
               className="flex items-center px-4 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-mute-dim transition-colors hover:text-mute"
             >
