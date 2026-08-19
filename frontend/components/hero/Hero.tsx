@@ -108,7 +108,7 @@ export default function Hero() {
 
           <motion.div
             style={{ opacity: metaOpacity }}
-            className="mt-4 min-h-[1.75rem] max-w-sm flex items-center md:mt-6"
+            className="mt-4 min-h-[2.5rem] max-w-md flex items-center md:mt-6"
           >
             <AnimatePresence mode="wait">
               <motion.p
@@ -117,7 +117,8 @@ export default function Hero() {
                 animate={{ opacity: 1 }}
                 exit={shouldReduceMotion ? undefined : { opacity: 0 }}
                 transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35 }}
-                className="font-mono text-[10px] italic leading-relaxed tracking-wide text-mute-dim"
+                style={{ fontSize: "clamp(0.875rem, 1.15vw, 1.125rem)" }}
+                className="font-mono italic leading-relaxed tracking-wide text-mute-dim"
               >
                 {heroStatusLines[statusIdx]}
               </motion.p>
