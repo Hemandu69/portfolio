@@ -7,25 +7,72 @@ import { contactEasterEggs } from "@/data/portfolio";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+const nameEmptyPool = [
+  "Your name is required. I need someone to blame when this email gets interesting.",
+  "I need a name. Preferably yours.",
+  "Your name is required. Telepathy is still in beta.",
+];
+
+function getNameValidationError(name: string): string | null {
+  const trimmed = name.trim();
+
+  // 1. Empty name
+  if (!name) {
+    const randomIdx = Math.floor(Math.random() * nameEmptyPool.length);
+    return nameEmptyPool[randomIdx];
+  }
+
+  // 2. Only whitespace
+  if (name.length > 0 && !trimmed) {
+    return "That's technically a name-shaped amount of whitespace.";
+  }
+
+  // 3. Too short (single character)
+  if (trimmed.length < 2) {
+    return "That's suspiciously short. Even your Wi-Fi password has more commitment.";
+  }
+
+  // 4. Check if name contains only numbers or special punctuation without letters
+  // Supports international letters, spaces, hyphens, apostrophes
+  const hasLetters = /\p{L}/u.test(trimmed);
+  if (!hasLetters) {
+    return "Let's keep the identity crisis out of the name field.";
+  }
+
+  return null;
+}
+
+const emailEmptyPool = [
+  "Your email is required. Unfortunately, telepathy isn't supported yet.",
+  "Nice try. That's a username wearing an email costume.",
+  "Your email forgot where it lives.",
+];
+
 function getEmailValidationError(email: string): string | null {
   const trimmed = email.trim();
 
   // 1. Empty email
+  if (!email) {
+    const randomIdx = Math.floor(Math.random() * emailEmptyPool.length);
+    return emailEmptyPool[randomIdx];
+  }
+
+  // 2. Only spaces
   if (!trimmed) {
     return "Your email is required. Unfortunately, telepathy isn't supported yet.";
   }
 
-  // 2. Spaces in the email
+  // 3. Spaces in the email
   if (/\s/.test(email)) {
     return "The space has entered the chat. Please remove it.";
   }
 
-  // 3. Consecutive dots
+  // 4. Consecutive dots
   if (/\.\./.test(trimmed)) {
     return "Two dots? Your email is trying to start a new paragraph.";
   }
 
-  // 4. Missing @
+  // 5. Missing @
   if (!trimmed.includes("@")) {
     return "That email is missing an @. Even emails need directions.";
   }
@@ -42,7 +89,7 @@ function getEmailValidationError(email: string): string | null {
     return "Nice try. That's a username wearing an email costume.";
   }
 
-  // 5. Missing domain after @ (e.g. "hello@")
+  // 6. Missing domain after @ (e.g. "hello@")
   if (!domainPart) {
     return "Your email forgot where it lives.";
   }
@@ -55,12 +102,12 @@ function getEmailValidationError(email: string): string | null {
   const domainSubparts = domainPart.split(".");
   const tld = domainSubparts[domainSubparts.length - 1];
 
-  // 6. Domain extension too short / incomplete (e.g. "hello@gmail.c")
+  // 7. Domain extension too short / incomplete (e.g. "hello@gmail.c")
   if (!tld || tld.length < 2) {
     return "That's a little too short to be an email address.";
   }
 
-  // 7. General RFC standard email regex check
+  // 8. General RFC standard email regex check
   const standardEmailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z0-9-]{2,}$/;
   if (!standardEmailRegex.test(trimmed)) {
     return "That email looks suspiciously unfinished.";
@@ -69,10 +116,50 @@ function getEmailValidationError(email: string): string | null {
   return null;
 }
 
+const messageEmptyPool = [
+  "You came all the way here and brought no message?",
+  "Your message has entered witness protection.",
+  "Your message seems to have mysteriously disappeared.",
+];
+
+const messageShortPool = [
+  "That's barely a message. Give me at least a little something to work with.",
+  "Is this a message or a trailer?",
+  "That's it? I was emotionally prepared for at least one more sentence.",
+  "Please provide slightly more evidence that you meant to contact me.",
+];
+
+function getMessageValidationError(message: string): string | null {
+  const trimmed = message.trim();
+
+  // 1. Empty message
+  if (!message) {
+    const randomIdx = Math.floor(Math.random() * messageEmptyPool.length);
+    return messageEmptyPool[randomIdx];
+  }
+
+  // 2. Only whitespace
+  if (message.length > 0 && !trimmed) {
+    return "That's a lot of whitespace for someone with so much to say.";
+  }
+
+  // 3. Too short (< 3 characters)
+  if (trimmed.length < 3) {
+    const randomIdx = Math.floor(Math.random() * messageShortPool.length);
+    return messageShortPool[randomIdx];
+  }
+
+  return null;
+}
+
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{
+    name: string | null;
+    email: string | null;
+    message: string | null;
+  }>({ name: null, email: null, message: null });
   const [msgIdx, setMsgIdx] = useState(0);
   const shouldReduceMotion = useReducedMotion();
 
@@ -91,13 +178,20 @@ export default function Contact() {
     e.preventDefault();
     if (status === "sending") return;
 
-    // Validate email before sending
-    const validationError = getEmailValidationError(form.email);
-    if (validationError) {
-      setEmailError(validationError);
+    // Validate all fields before sending
+    const nameErr = getNameValidationError(form.name);
+    const emailErr = getEmailValidationError(form.email);
+    const messageErr = getMessageValidationError(form.message);
+
+    if (nameErr || emailErr || messageErr) {
+      setErrors({
+        name: nameErr,
+        email: emailErr,
+        message: messageErr,
+      });
       return;
     }
-    setEmailError(null);
+    setErrors({ name: null, email: null, message: null });
 
     setStatus("sending");
     try {
@@ -164,7 +258,22 @@ export default function Contact() {
                 <Field
                   label="Name"
                   value={form.name}
-                  onChange={(v) => setForm((f) => ({ ...f, name: v }))}
+                  onChange={(v) => {
+                    setForm((f) => ({ ...f, name: v }));
+                    if (errors.name) {
+                      const err = getNameValidationError(v);
+                      if (!err) setErrors((prev) => ({ ...prev, name: null }));
+                    }
+                  }}
+                  onBlur={() => {
+                    if (form.name) {
+                      setErrors((prev) => ({
+                        ...prev,
+                        name: getNameValidationError(form.name),
+                      }));
+                    }
+                  }}
+                  error={errors.name}
                   required
                 />
                 <Field
@@ -173,24 +282,42 @@ export default function Contact() {
                   value={form.email}
                   onChange={(v) => {
                     setForm((f) => ({ ...f, email: v }));
-                    if (emailError) {
+                    if (errors.email) {
                       const err = getEmailValidationError(v);
-                      if (!err) setEmailError(null);
+                      if (!err) setErrors((prev) => ({ ...prev, email: null }));
                     }
                   }}
                   onBlur={() => {
                     if (form.email) {
-                      setEmailError(getEmailValidationError(form.email));
+                      setErrors((prev) => ({
+                        ...prev,
+                        email: getEmailValidationError(form.email),
+                      }));
                     }
                   }}
-                  error={emailError}
+                  error={errors.email}
                   required
                 />
                 <Field
                   label="Message"
                   textarea
                   value={form.message}
-                  onChange={(v) => setForm((f) => ({ ...f, message: v }))}
+                  onChange={(v) => {
+                    setForm((f) => ({ ...f, message: v }));
+                    if (errors.message) {
+                      const err = getMessageValidationError(v);
+                      if (!err) setErrors((prev) => ({ ...prev, message: null }));
+                    }
+                  }}
+                  onBlur={() => {
+                    if (form.message) {
+                      setErrors((prev) => ({
+                        ...prev,
+                        message: getMessageValidationError(form.message),
+                      }));
+                    }
+                  }}
+                  error={errors.message}
                   required
                 />
 
