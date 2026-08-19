@@ -7,25 +7,178 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import CustomCursor from "@/components/cursor/CustomCursor";
 
-const poolJokes = [
-  "You could have been doing literally anything else.",
-  "Your future self is going to ask what happened here.",
-  "I've stopped judging you.",
-  "Actually, no. I'm judging you.",
-  "Double digits. That's not a milestone, but somehow you made it one.",
-  "This page has now become your longest-term commitment.",
-  "You clicked a button twelve times because I told you not to.",
-  "At this point, I'm less concerned about the website.",
-  "You are now part of the problem.",
-  "I could stop you. I have chosen not to.",
-  "There were better ways to spend your time. And yet, here we are.",
-  "This could have been an About page.",
-  "No recruiters were harmed in the making of this page.",
-  "You clicked it. I merely complied.",
-  "This is between you and your browser history.",
-  "Your decision-making skills are now under review.",
-  "There are better ways to spend your time.",
-  "And yet, here we are.",
+interface BadIterationConfig {
+  id: number;
+  image: string;
+  alt: string;
+  heading: string;
+  subheading: string;
+  copy: string;
+  note?: string;
+}
+
+const badIterations: BadIterationConfig[] = [
+  {
+    id: 1,
+    image: "/images/bad/spongebob-awkward.gif",
+    alt: "SpongeBob awkward look",
+    heading: "Congratulations.",
+    subheading: "You made another bad decision.",
+    copy: "I respect the commitment.",
+    note: "Unfortunately, this can get worse.",
+  },
+  {
+    id: 2,
+    image: "/images/bad/less concern.webp",
+    alt: "Mild concern",
+    heading: "Decision #02",
+    subheading: "You had a perfectly good opportunity to leave.",
+    copy: "But apparently we're doing this.",
+  },
+  {
+    id: 3,
+    image: "/images/bad/side-eye-side-eye-meme.gif",
+    alt: "Side eye meme",
+    heading: "Decision #03",
+    subheading: "At this point, this is no longer curiosity.",
+    copy: "You are actively participating.",
+  },
+  {
+    id: 4,
+    image: "/images/bad/more concern.webp",
+    alt: "More concern",
+    heading: "Decision #04",
+    subheading: "You have now spent valuable time on a page whose primary feature is telling you that you're making bad decisions.",
+    copy: "Somewhere, productivity is crying.",
+  },
+  {
+    id: 5,
+    image: "/images/bad/regret.webp",
+    alt: "Regret begins",
+    heading: "Decision #05",
+    subheading: "Okay. You've made five bad decisions. At this point I feel responsible.",
+    copy: "Would you like to make another one?",
+  },
+  {
+    id: 6,
+    image: "/images/bad/more regret.webp",
+    alt: "Growing regret",
+    heading: "Decision #06",
+    subheading: "You could have been doing literally anything else.",
+    copy: "This is becoming difficult to defend.",
+  },
+  {
+    id: 7,
+    image: "/images/bad/more awkward.webp",
+    alt: "More awkward",
+    heading: "Decision #07",
+    subheading: "Your future self is going to ask what happened here.",
+    copy: "I'm just documenting your choices.",
+  },
+  {
+    id: 8,
+    image: "/images/bad/regret.webp",
+    alt: "Heavy judgment",
+    heading: "Decision #08",
+    subheading: "I've stopped judging you.",
+    copy: "Actually, no. I'm judging you.",
+  },
+  {
+    id: 9,
+    image: "/images/bad/more awkward.webp",
+    alt: "Deep awkwardness",
+    heading: "Decision #09",
+    subheading: "This URL has achieved absolutely nothing.",
+    copy: "You have absolutely no one to blame.",
+  },
+  {
+    id: 10,
+    image: "/images/bad/chaos.webp",
+    alt: "Chaos starts",
+    heading: "Decision #10",
+    subheading: "Double digits. That's not a milestone.",
+    copy: "But somehow you made it one.",
+  },
+  {
+    id: 11,
+    image: "/images/bad/more chaos.gif",
+    alt: "Increasing chaos",
+    heading: "Decision #11",
+    subheading: "This page has now become your longest-term commitment.",
+    copy: "I don't know what you expected.",
+  },
+  {
+    id: 12,
+    image: "/images/bad/chaos.webp",
+    alt: "Building chaos",
+    heading: "Decision #12",
+    subheading: "You clicked a button twelve times because I told you not to.",
+    copy: "At this point, I'm less concerned about the website.",
+  },
+  {
+    id: 13,
+    image: "/images/bad/more chaos.gif",
+    alt: "Chaos escalating",
+    heading: "Decision #13",
+    subheading: "At this point, I'm less concerned about the website.",
+    copy: "You are now part of the problem.",
+  },
+  {
+    id: 14,
+    image: "/images/bad/chaos.webp",
+    alt: "Total chaos",
+    heading: "Decision #14",
+    subheading: "You are now part of the problem.",
+    copy: "This could have been an About page.",
+  },
+  {
+    id: 15,
+    image: "/images/bad/more chaos.gif",
+    alt: "High chaos gif",
+    heading: "Decision #15",
+    subheading: "I could stop you. I have chosen not to.",
+    copy: "No recruiters were harmed in the making of this page.",
+  },
+  {
+    id: 16,
+    image: "/images/bad/the-final-boss.webp",
+    alt: "Approaching final boss",
+    heading: "Decision #16",
+    subheading: "Your decision-making skills are now under review.",
+    copy: "This is between you and your browser history.",
+  },
+  {
+    id: 17,
+    image: "/images/bad/more chaos.gif",
+    alt: "Absolute disaster",
+    heading: "Decision #17",
+    subheading: "There were better ways to spend your time.",
+    copy: "And yet, here we are.",
+  },
+  {
+    id: 18,
+    image: "/images/bad/the-final-boss.webp",
+    alt: "Near final boss",
+    heading: "Decision #18",
+    subheading: "You clicked it. I merely complied.",
+    copy: "You had 17 opportunities to stop.",
+  },
+  {
+    id: 19,
+    image: "/images/bad/the-final-boss.webp",
+    alt: "Penultimate bad decision",
+    heading: "Decision #19",
+    subheading: "You chose violence instead.",
+    copy: "We are approaching the end of this nonsense.",
+  },
+  {
+    id: 20,
+    image: "/images/bad/final page image.webp",
+    alt: "Final page boss image",
+    heading: "YOU ACTUALLY DID IT.",
+    subheading: "20 bad decisions.",
+    copy: "I genuinely have nothing left to say. The website has officially given up. Okay. Go outside.",
+  },
 ];
 
 function getRegretLabel(count: number): string {
@@ -50,26 +203,16 @@ function getFakeConsequence(count: number): string | null {
 }
 
 export default function BadPage() {
-  const [step, setStep] = useState(1);
+  const [stepIndex, setStepIndex] = useState(0);
   const [branch, setBranch] = useState<string | null>(null);
   const shouldReduceMotion = useReducedMotion();
 
+  const currentIteration = badIterations[stepIndex] || badIterations[badIterations.length - 1];
+  const step = currentIteration.id;
+
   const handleNextStep = () => {
     setBranch(null);
-    setStep((prev) => prev + 1);
-  };
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 16 },
-    show: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0 : 0.6,
-        delay: shouldReduceMotion ? 0 : i * 0.1,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    }),
+    setStepIndex((prev) => Math.min(prev + 1, badIterations.length - 1));
   };
 
   const fakeConsequence = getFakeConsequence(step);
@@ -99,13 +242,7 @@ export default function BadPage() {
         {/* Center Content Area */}
         <div className="relative z-10 my-auto flex max-w-4xl flex-col py-8 md:py-12">
           {/* Regret Meter & Decision Counter */}
-          <motion.div
-            custom={0}
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            className="mb-4 flex flex-wrap items-center gap-3 sm:gap-4"
-          >
+          <div className="mb-4 flex flex-wrap items-center gap-3 sm:gap-4">
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-mute-dim">
               BAD DECISION <strong className="text-paper">#{String(step).padStart(2, "0")}</strong>
             </span>
@@ -116,7 +253,7 @@ export default function BadPage() {
             >
               REGRET LEVEL: {getRegretLabel(step)}
             </span>
-          </motion.div>
+          </div>
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -127,36 +264,8 @@ export default function BadPage() {
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col"
             >
-              {/* STEP 1 */}
-              {step === 1 && (
-                <>
-                  <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
-                    Congratulations.
-                  </h1>
-                  <p className="mt-3 font-display text-xl italic text-lavender sm:text-2xl md:text-3xl">
-                    You made another bad decision.
-                  </p>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-mute md:text-base">
-                    I respect the commitment.
-                  </p>
-                </>
-              )}
-
-              {/* STEP 2 */}
-              {step === 2 && !branch && (
-                <>
-                  <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
-                    Decision #02
-                  </h1>
-                  <p className="mt-3 font-display text-xl italic text-lavender sm:text-2xl md:text-3xl">
-                    You had a perfectly good opportunity to leave.
-                  </p>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-mute md:text-base">
-                    But apparently we&rsquo;re doing this.
-                  </p>
-                </>
-              )}
-              {step === 2 && branch === "lesson" && (
+              {/* HEADING & SUBHEADING */}
+              {step === 2 && branch === "lesson" ? (
                 <>
                   <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
                     Have you?
@@ -165,23 +274,7 @@ export default function BadPage() {
                     Because you&rsquo;re still here.
                   </p>
                 </>
-              )}
-
-              {/* STEP 3 */}
-              {step === 3 && !branch && (
-                <>
-                  <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
-                    Decision #03
-                  </h1>
-                  <p className="mt-3 font-display text-xl italic text-lavender sm:text-2xl md:text-3xl">
-                    At this point, this is no longer curiosity.
-                  </p>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-mute md:text-base">
-                    You are actively participating.
-                  </p>
-                </>
-              )}
-              {step === 3 && branch === "stop" && (
+              ) : step === 3 && branch === "stop" ? (
                 <>
                   <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
                     Interesting.
@@ -193,38 +286,7 @@ export default function BadPage() {
                     That is technically progress.
                   </p>
                 </>
-              )}
-
-              {/* STEP 4 */}
-              {step === 4 && (
-                <>
-                  <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
-                    Decision #04
-                  </h1>
-                  <p className="mt-3 font-display text-xl italic text-lavender sm:text-2xl md:text-3xl">
-                    You have now spent valuable time on a page whose primary feature is telling you that you&rsquo;re making bad decisions.
-                  </p>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-mute md:text-base">
-                    Somewhere, productivity is crying.
-                  </p>
-                </>
-              )}
-
-              {/* STEP 5 */}
-              {step === 5 && !branch && (
-                <>
-                  <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
-                    Decision #05
-                  </h1>
-                  <p className="mt-3 font-display text-xl italic text-lavender sm:text-2xl md:text-3xl">
-                    Okay. You&rsquo;ve made five bad decisions. At this point I feel responsible.
-                  </p>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-mute md:text-base">
-                    Would you like to make another one?
-                  </p>
-                </>
-              )}
-              {step === 5 && branch === "no" && (
+              ) : step === 5 && branch === "no" ? (
                 <>
                   <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
                     That sounds healthy.
@@ -233,35 +295,7 @@ export default function BadPage() {
                     ...but you can still click the other button.
                   </p>
                 </>
-              )}
-
-              {/* STEPS 6 to 19 */}
-              {step >= 6 && step < 20 && (
-                <>
-                  <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
-                    Decision #{String(step).padStart(2, "0")}
-                  </h1>
-                  <p className="mt-3 font-display text-xl italic text-lavender sm:text-2xl md:text-3xl">
-                    {poolJokes[(step - 6) % poolJokes.length]}
-                  </p>
-                </>
-              )}
-
-              {/* STEP 20+ FINAL STATE */}
-              {step >= 20 && !branch && (
-                <>
-                  <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
-                    YOU ACTUALLY DID IT.
-                  </h1>
-                  <p className="mt-3 font-display text-xl italic text-lavender sm:text-2xl md:text-3xl">
-                    {step} bad decisions.
-                  </p>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-mute md:text-base">
-                    I genuinely have nothing left to say. The website has officially given up. Okay. Go outside.
-                  </p>
-                </>
-              )}
-              {step >= 20 && branch === "onelast" && (
+              ) : step >= 20 && branch === "onelast" ? (
                 <>
                   <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
                     No.
@@ -270,61 +304,90 @@ export default function BadPage() {
                     You&rsquo;ve had enough. I am cutting you off.
                   </p>
                 </>
+              ) : (
+                <>
+                  <h1 className="font-display text-4xl font-light italic leading-[1.08] text-paper sm:text-5xl md:text-6xl lg:text-7xl">
+                    {currentIteration.heading}
+                  </h1>
+                  <p className="mt-3 font-display text-xl italic text-lavender sm:text-2xl md:text-3xl">
+                    {currentIteration.subheading}
+                  </p>
+                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-mute md:text-base">
+                    {currentIteration.copy}
+                  </p>
+                </>
               )}
 
-              {/* SpongeBob Awkward GIF Centerpiece */}
-              <div className="my-6 max-w-[200px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl xs:max-w-[240px] sm:max-w-[250px] md:my-8 md:max-w-[260px]">
+              {/* PROGRESSIVE IMAGE DISPLAY */}
+              <div className="relative my-6 aspect-[4/3] w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[260px] md:my-8 md:max-w-[280px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl bg-neutral-950">
                 <Image
-                  src="/images/spongebob-awkward.gif"
-                  alt="Awkward SpongeBob"
-                  width={260}
-                  height={195}
+                  src={currentIteration.image}
+                  alt={currentIteration.alt}
+                  fill
+                  priority
                   unoptimized
                   data-cursor="AWKWARD"
-                  className="h-auto w-full object-cover grayscale-[20%] contrast-[1.05]"
+                  className="object-cover grayscale-[15%] contrast-[1.05]"
+                  sizes="(max-width: 768px) 240px, 280px"
                 />
               </div>
 
               {/* Fake Consequence Banner */}
               {fakeConsequence && (
-                <div className="mb-6 rounded-lg border border-line-strong/60 bg-white/[0.02] p-4 font-mono text-xs text-lavender">
+                <div className="mb-6 rounded-lg border border-line-strong/60 bg-white/[0.02] p-4 font-mono text-xs text-lavender max-w-xl">
                   {fakeConsequence}
                 </div>
               )}
 
-              {/* Note / Action Prompt */}
-              {step === 1 && (
+              {/* Optional Note */}
+              {currentIteration.note && !branch && (
                 <p className="mb-6 font-mono text-xs italic tracking-wide text-mute-dim">
-                  Unfortunately, this can get worse.
+                  {currentIteration.note}
                 </p>
               )}
 
               {/* Action Buttons */}
               <div className="mt-2 flex flex-wrap items-center gap-4 sm:gap-6">
-                {/* STEP 1 BUTTONS */}
-                {step === 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={handleNextStep}
-                      data-cursor="BAD IDEA"
-                      className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
-                    >
-                      Continue making bad decisions
-                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                    </button>
-                    <Link
-                      href="/"
-                      data-cursor="ESCAPE"
-                      className="flex items-center px-4 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-mute-dim transition-colors hover:text-mute"
-                    >
-                      Get me out of here
-                    </Link>
-                  </>
-                )}
-
-                {/* STEP 2 BUTTONS */}
-                {step === 2 && !branch && (
+                {step === 2 && branch === "lesson" ? (
+                  <button
+                    type="button"
+                    onClick={handleNextStep}
+                    data-cursor="FAIR"
+                    className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
+                  >
+                    Fair point
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  </button>
+                ) : step === 3 && branch === "stop" ? (
+                  <button
+                    type="button"
+                    onClick={handleNextStep}
+                    data-cursor="UNDO"
+                    className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
+                  >
+                    Undo my progress
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  </button>
+                ) : step === 5 && branch === "no" ? (
+                  <button
+                    type="button"
+                    onClick={handleNextStep}
+                    data-cursor="FINE"
+                    className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
+                  >
+                    Fine.
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  </button>
+                ) : step >= 20 && branch === "onelast" ? (
+                  <Link
+                    href="/"
+                    data-cursor="ESCAPE"
+                    className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
+                  >
+                    Go home now
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  </Link>
+                ) : step === 2 ? (
                   <>
                     <button
                       type="button"
@@ -344,21 +407,7 @@ export default function BadPage() {
                       I have learned my lesson
                     </button>
                   </>
-                )}
-                {step === 2 && branch === "lesson" && (
-                  <button
-                    type="button"
-                    onClick={handleNextStep}
-                    data-cursor="FAIR"
-                    className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
-                  >
-                    Fair point
-                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                  </button>
-                )}
-
-                {/* STEP 3 BUTTONS */}
-                {step === 3 && !branch && (
+                ) : step === 3 ? (
                   <>
                     <button
                       type="button"
@@ -378,43 +427,7 @@ export default function BadPage() {
                       Stop
                     </button>
                   </>
-                )}
-                {step === 3 && branch === "stop" && (
-                  <button
-                    type="button"
-                    onClick={handleNextStep}
-                    data-cursor="UNDO"
-                    className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
-                  >
-                    Undo my progress
-                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                  </button>
-                )}
-
-                {/* STEP 4 BUTTONS */}
-                {step === 4 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={handleNextStep}
-                      data-cursor="ACCEPT"
-                      className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
-                    >
-                      I accept the consequences
-                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                    </button>
-                    <Link
-                      href="/"
-                      data-cursor="ESCAPE"
-                      className="flex items-center px-4 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-mute-dim transition-colors hover:text-mute"
-                    >
-                      Get me out of here
-                    </Link>
-                  </>
-                )}
-
-                {/* STEP 5 BUTTONS */}
-                {step === 5 && !branch && (
+                ) : step === 5 ? (
                   <>
                     <button
                       type="button"
@@ -434,43 +447,7 @@ export default function BadPage() {
                       No
                     </button>
                   </>
-                )}
-                {step === 5 && branch === "no" && (
-                  <button
-                    type="button"
-                    onClick={handleNextStep}
-                    data-cursor="FINE"
-                    className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
-                  >
-                    Fine.
-                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                  </button>
-                )}
-
-                {/* STEPS 6 to 19 BUTTONS */}
-                {step >= 6 && step < 20 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={handleNextStep}
-                      data-cursor="BAD IDEA"
-                      className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
-                    >
-                      Continue making bad decisions
-                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                    </button>
-                    <Link
-                      href="/"
-                      data-cursor="ESCAPE"
-                      className="flex items-center px-4 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-mute-dim transition-colors hover:text-mute"
-                    >
-                      Get me out of here
-                    </Link>
-                  </>
-                )}
-
-                {/* STEP 20+ FINAL BUTTONS */}
-                {step >= 20 && !branch && (
+                ) : step >= 20 ? (
                   <>
                     <Link
                       href="/"
@@ -489,16 +466,25 @@ export default function BadPage() {
                       One last bad decision
                     </button>
                   </>
-                )}
-                {step >= 20 && branch === "onelast" && (
-                  <Link
-                    href="/"
-                    data-cursor="ESCAPE"
-                    className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
-                  >
-                    Go home now
-                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                  </Link>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handleNextStep}
+                      data-cursor="BAD IDEA"
+                      className="group flex items-center gap-3 border border-line-strong px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-paper transition-colors hover:border-lavender hover:text-lavender"
+                    >
+                      Continue making bad decisions
+                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                    </button>
+                    <Link
+                      href="/"
+                      data-cursor="ESCAPE"
+                      className="flex items-center px-4 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-mute-dim transition-colors hover:text-mute"
+                    >
+                      Get me out of here
+                    </Link>
+                  </>
                 )}
               </div>
             </motion.div>
