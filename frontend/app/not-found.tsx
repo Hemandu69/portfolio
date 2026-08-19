@@ -85,7 +85,7 @@ export default function NotFound() {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="my-6 max-w-[240px] sm:max-w-[280px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl bg-neutral-950/80 p-1 md:my-8"
+            className="my-6 inline-block w-fit overflow-hidden rounded-xl border border-line-strong/60 shadow-xl bg-transparent md:my-8"
           >
             <Image
               src="/images/spongebob-awkward.gif"
@@ -94,7 +94,7 @@ export default function NotFound() {
               height={210}
               unoptimized
               data-cursor="AWKWARD"
-              className="h-auto w-full rounded-lg object-contain grayscale-[20%] contrast-[1.05]"
+              className="h-auto max-h-[260px] w-auto max-w-[260px] sm:max-w-[280px] rounded-xl object-contain grayscale-[20%] contrast-[1.05]"
             />
           </motion.div>
 

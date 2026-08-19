@@ -319,7 +319,7 @@ export default function BadPage() {
               )}
 
               {/* PROGRESSIVE IMAGE DISPLAY */}
-              <div className="relative my-6 max-w-[260px] sm:max-w-[320px] max-h-[300px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl bg-neutral-950/80 flex items-center justify-center p-1 md:my-8">
+              <div className="my-6 inline-block w-fit overflow-hidden rounded-xl border border-line-strong/60 shadow-xl bg-transparent md:my-8">
                 <Image
                   src={currentIteration.image}
                   alt={currentIteration.alt}
@@ -328,7 +328,7 @@ export default function BadPage() {
                   priority
                   unoptimized
                   data-cursor="AWKWARD"
-                  className="h-auto max-h-[280px] w-auto max-w-full rounded-lg object-contain grayscale-[15%] contrast-[1.05]"
+                  className="h-auto max-h-[280px] sm:max-h-[320px] w-auto max-w-[260px] sm:max-w-[320px] rounded-xl object-contain grayscale-[15%] contrast-[1.05]"
                 />
               </div>
 
