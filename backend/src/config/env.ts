@@ -9,7 +9,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   FRONTEND_URL: z
     .string()
-    .default("https://www.hemandu.com,https://hemandu.com,http://localhost:3000"),
+    .default("https://portfolio.hemandu.com,https://www.hemandu.com,https://hemandu.com,http://localhost:3000"),
   RESEND_API_KEY: z.string().min(1, "RESEND_API_KEY is required"),
   CONTACT_EMAIL: z.string().email("CONTACT_EMAIL must be a valid destination email address"),
   FROM_EMAIL: z.string().min(1, "FROM_EMAIL is required (e.g., Hemandu <hello@hemandu.com>)"),

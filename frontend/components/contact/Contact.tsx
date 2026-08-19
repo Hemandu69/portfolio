@@ -26,9 +26,12 @@ export default function Contact() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (status === "sending") return;
     setStatus("sending");
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "";
+      const baseUrl =
+        process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+        "https://portfolio.hemandu.com";
       const endpoint = `${baseUrl}/api/contact`;
 
       const res = await fetch(endpoint, {
@@ -36,8 +39,15 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error("failed");
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok || (data && data.success === false)) {
+        throw new Error(data?.message || "Failed to deliver message");
+      }
+
       setStatus("sent");
+      setForm({ name: "", email: "", message: "" });
     } catch {
       setStatus("error");
     }
@@ -99,7 +109,7 @@ export default function Contact() {
                   required
                 />
 
-                <div className="mt-4 flex items-center gap-6">
+                <div className="mt-4 flex flex-wrap items-center gap-6">
                   <button
                     type="submit"
                     data-cursor="SAY HI"
@@ -114,7 +124,7 @@ export default function Contact() {
                   </button>
                   {status === "error" && (
                     <span className="font-mono text-xs text-rust">
-                      Something broke. Try again?
+                      Well, that went sideways. Your message didn&rsquo;t make it through. Try again?
                     </span>
                   )}
                 </div>
@@ -145,7 +155,7 @@ export default function Contact() {
                   Sent.
                 </span>
                 <p className="mt-4 text-sm text-mute md:text-base">
-                  Nice. I&rsquo;ll get back to you.
+                  Message delivered. Nice. The internet actually behaved.
                 </p>
               </motion.div>
             )}
