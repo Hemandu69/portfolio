@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+﻿import type { Request, Response } from "express";
 import { z } from "zod";
 import { emailService } from "../services/email.service.js";
 import { sendSuccess, sendError } from "../utils/response.js";
@@ -17,7 +17,7 @@ const contactSchema = z.object({
   message: z
     .string({ required_error: "Message is required." })
     .trim()
-    .min(3, "Message must be at least 3 characters.")
+    .min(5, "Message must be at least 5 characters.")
     .max(5000, "Message must be less than 5000 characters."),
 });
 
@@ -36,7 +36,7 @@ export const handleContactForm = async (req: Request, res: Response): Promise<Re
     console.log(`[Contact] Successfully processed inquiry from ${email} (${name})`);
     return sendSuccess(
       res,
-      "Your message has been sent successfully. Check your inbox � I've sent you a little confirmation ??",
+      "Your message has been sent successfully. Check your inbox — I've sent you a little confirmation 🚀",
       undefined,
       200
     );

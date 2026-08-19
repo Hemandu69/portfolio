@@ -123,10 +123,11 @@ const messageEmptyPool = [
 ];
 
 const messageShortPool = [
-  "That's barely a message. Give me at least a little something to work with.",
-  "Is this a message or a trailer?",
+  "That's barely a message. Give me at least 5 characters to work with.",
+  "Is this a message or a trailer? Give me a little more.",
   "That's it? I was emotionally prepared for at least one more sentence.",
   "Please provide slightly more evidence that you meant to contact me.",
+  "You've given me fewer than 5 characters. I'm going to need a little more evidence.",
 ];
 
 function getMessageValidationError(message: string): string | null {
@@ -143,8 +144,8 @@ function getMessageValidationError(message: string): string | null {
     return "That's a lot of whitespace for someone with so much to say.";
   }
 
-  // 3. Too short (< 3 characters)
-  if (trimmed.length < 3) {
+  // 3. Too short (< 5 characters)
+  if (trimmed.length < 5) {
     const randomIdx = Math.floor(Math.random() * messageShortPool.length);
     return messageShortPool[randomIdx];
   }
