@@ -159,6 +159,19 @@ export const currently = [
   { label: "Status", value: "pretending the bug is reproducible" },
 ];
 
+export const overthinkerVariations = [
+  "Professional overthinker. Somehow still ships code.",
+  "Professional overthinker of absolutely everything.",
+  "Professional overthinker with questionable sleep schedules.",
+  "Professional overthinker. Amateur decision maker.",
+  "Professional overthinker of problems I just created.",
+  "Professional overthinker with 37 tabs open.",
+  "Professional overthinker. Surprisingly employable.",
+  "Professional overthinker with a suspicious relationship with Stack Overflow.",
+  "Professional overthinker. Full-time bug negotiator.",
+  "Professional overthinker. Part-time bug creator.",
+];
+
 export const contactEasterEggs = [
   "Yes, I actually read these. Usually.",
   "Go ahead. I promise I'm not ignoring you.",
