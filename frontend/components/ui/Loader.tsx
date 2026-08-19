@@ -3,48 +3,37 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const loadingSequences = [
-  [
-    "Negotiating with the CSS.",
-    "Bribing the server.",
-    "Making things look intentional.",
-    "Alright. It survived.",
-  ],
-  [
-    "Convincing the pixels to cooperate.",
-    "Loading questionable decisions.",
-    "Compiling unnecessary confidence.",
-    "Good enough. Let them in.",
-  ],
-  [
-    "Checking if production is still alive.",
-    "Politely asking JavaScript to work.",
-    "Almost done pretending this was easy.",
-    "Alright. It survived.",
-  ],
-  [
-    "Teaching the website how to behave.",
-    "Removing bugs that definitely weren't there five minutes ago.",
-    "Applying unnecessary attention to detail.",
-    "Good enough. Let them in.",
-  ],
-  [
-    "Making sure nothing catches fire.",
-    "Checking the tabs. There are too many.",
-    "Preparing an unnecessarily dramatic portfolio.",
-    "Alright. It survived.",
-  ],
+const loaderJokes = [
+  "Negotiating with the CSS.",
+  "Politely asking JavaScript to work.",
+  "Bribing the server.",
+  "Making things look intentional.",
+  "Loading questionable decisions.",
+  "Teaching the website how to behave.",
+  "Checking if production is still alive.",
+  "Compiling unnecessary confidence.",
+  "Applying unnecessary attention to detail.",
+  "Removing bugs that definitely weren't there five minutes ago.",
+  "Checking the tabs. There are too many.",
+  "Preparing an unnecessarily dramatic portfolio.",
+  "Convincing the pixels to cooperate.",
+  "Making sure nothing catches fire.",
+  "Almost done pretending this was easy.",
+  "Loading... because apparently that's still a thing.",
+  "Asking the internet to remain stable.",
+  "Giving the server a motivational speech.",
+  "Making this look more intentional than it was.",
+  "Checking whether this was actually a good idea.",
 ];
 
 export default function Loader({ onDone }: { onDone?: () => void }) {
   const [count, setCount] = useState(0);
-  const [seqIdx, setSeqIdx] = useState(0);
-  const [msgIdx, setMsgIdx] = useState(0);
+  const [jokeIdx, setJokeIdx] = useState(0);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    // Pick a random sequence on client mount
-    setSeqIdx(Math.floor(Math.random() * loadingSequences.length));
+    // Pick ONE random joke safely on client mount
+    setJokeIdx(Math.floor(Math.random() * loaderJokes.length));
 
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -59,22 +48,12 @@ export default function Loader({ onDone }: { onDone?: () => void }) {
     }
 
     const start = performance.now();
-    const duration = 1500;
+    const duration = 1100;
     let raf: number;
 
     function tick(now: number) {
       const p = Math.min(1, (now - start) / duration);
       setCount(Math.floor(p * 100));
-
-      if (p < 0.33) {
-        setMsgIdx(0);
-      } else if (p < 0.66) {
-        setMsgIdx(1);
-      } else if (p < 0.92) {
-        setMsgIdx(2);
-      } else {
-        setMsgIdx(3);
-      }
 
       if (p < 1) {
         raf = requestAnimationFrame(tick);
@@ -82,14 +61,12 @@ export default function Loader({ onDone }: { onDone?: () => void }) {
         setTimeout(() => {
           setDone(true);
           onDone?.();
-        }, 280);
+        }, 200);
       }
     }
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [onDone]);
-
-  const activeSequence = loadingSequences[seqIdx] || loadingSequences[0];
 
   return (
     <AnimatePresence>
@@ -103,22 +80,16 @@ export default function Loader({ onDone }: { onDone?: () => void }) {
             Hemandu
           </span>
 
-          <div className="mt-4 min-h-[2.25rem] max-w-md flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={msgIdx}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.18 }}
-                className="font-mono text-xs italic tracking-wide text-mute md:text-sm"
-              >
-                {activeSequence[msgIdx]}
-              </motion.span>
-            </AnimatePresence>
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+            className="mt-4 max-w-md font-mono text-xs italic tracking-wide text-mute md:text-sm"
+          >
+            {loaderJokes[jokeIdx]}
+          </motion.p>
 
-          <span className="mt-3 font-mono text-[10px] tracking-[0.3em] text-mute-dim uppercase">
+          <span className="mt-4 font-mono text-[10px] tracking-[0.3em] text-mute-dim uppercase">
             {String(count).padStart(2, "0")} — 100
           </span>
         </motion.div>
