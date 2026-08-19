@@ -124,7 +124,7 @@ export default function Contact() {
                   </button>
                   {status === "error" && (
                     <span className="font-mono text-xs text-rust">
-                      Well, that went sideways. Your message didn&rsquo;t make it through. Try again?
+                      Well, that went beautifully wrong. Your message is still here. Give it another shot.
                     </span>
                   )}
                 </div>
@@ -151,11 +151,11 @@ export default function Contact() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="font-display text-[13vw] italic text-lavender sm:text-[7vw] md:text-[4.5vw]">
-                  Sent.
+                <span className="font-display text-[11vw] italic text-lavender sm:text-[6.5vw] md:text-[4vw] leading-tight block">
+                  And... it&rsquo;s gone.
                 </span>
-                <p className="mt-4 text-sm text-mute md:text-base">
-                  Message delivered. Nice. The internet actually behaved.
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-mute md:text-base">
+                  Your message has successfully escaped into Hemandu&rsquo;s inbox. He&rsquo;s probably reading it right now, pretending he wasn&rsquo;t checking his inbox every five minutes.
                 </p>
               </motion.div>
             )}
