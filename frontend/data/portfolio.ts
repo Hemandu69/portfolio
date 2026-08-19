@@ -153,10 +153,22 @@ export const experience = [
 ];
 
 export const currently = [
-  { label: "Building", value: "something that started as a five-minute idea" },
-  { label: "Learning", value: "something I will definitely overcomplicate" },
-  { label: "Watching", value: "one more episode. allegedly." },
-  { label: "Status", value: "pretending the bug is reproducible" },
+  {
+    label: "Building",
+    value: "something that started as a five-minute idea and is now a lifestyle choice",
+  },
+  {
+    label: "Learning",
+    value: "something I absolutely could have learned the normal way",
+  },
+  {
+    label: "Watching",
+    value: "one more episode. this time I'm definitely stopping.",
+  },
+  {
+    label: "Status",
+    value: "the bug is reproducible. my understanding of it isn't.",
+  },
 ];
 
 export const overthinkerVariations = [
