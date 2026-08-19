@@ -16,9 +16,16 @@ export default function Experience() {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-3 md:flex-row md:items-baseline md:gap-10"
           >
-            <span className="font-display text-[16vw] italic leading-none text-lavender-dim sm:text-[9vw] md:w-40 md:text-[4vw]">
-              {e.year}
-            </span>
+            <div className="flex flex-col shrink-0 md:w-44">
+              <span className="font-display text-[16vw] italic leading-none text-lavender-dim sm:text-[9vw] md:text-[4vw]">
+                {e.year}
+              </span>
+              {"period" in e && e.period && (
+                <span className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-mute-dim">
+                  {e.period}
+                </span>
+              )}
+            </div>
             <div>
               <h3 className="font-display text-2xl text-paper md:text-3xl">
                 {e.role}

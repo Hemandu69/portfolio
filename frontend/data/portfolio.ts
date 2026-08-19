@@ -132,10 +132,11 @@ export const skillsJoke =
 export const experience = [
   {
     year: "2026",
+    period: "July 13 — Present",
     role: "Full Stack Development Intern",
     org: "Digital India Corporation",
     detail:
-      "Shipped features with Next.js, TypeScript and REST APIs, wired WordPress content and CDN assets into the frontend, and kept GitHub Actions honest across beta and production. Turns out production is just development with witnesses.",
+      "Built and shipped features across Next.js, TypeScript and REST APIs, connected WordPress content and CDN assets to the frontend, and kept CI/CD pipelines green. Also submitted enough pull requests to become a recurring character in my mentor's GitHub notifications.",
   },
   {
     year: "2023–27",
