@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -319,16 +319,16 @@ export default function BadPage() {
               )}
 
               {/* PROGRESSIVE IMAGE DISPLAY */}
-              <div className="relative my-6 aspect-[4/3] w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[260px] md:my-8 md:max-w-[280px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl bg-neutral-950">
+              <div className="relative my-6 max-w-[260px] sm:max-w-[320px] max-h-[300px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl bg-neutral-950/80 flex items-center justify-center p-1 md:my-8">
                 <Image
                   src={currentIteration.image}
                   alt={currentIteration.alt}
-                  fill
+                  width={320}
+                  height={300}
                   priority
                   unoptimized
                   data-cursor="AWKWARD"
-                  className="object-cover grayscale-[15%] contrast-[1.05]"
-                  sizes="(max-width: 768px) 240px, 280px"
+                  className="h-auto max-h-[280px] w-auto max-w-full rounded-lg object-contain grayscale-[15%] contrast-[1.05]"
                 />
               </div>
 

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -85,7 +85,7 @@ export default function NotFound() {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="my-6 max-w-[200px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl xs:max-w-[240px] sm:max-w-[260px] md:my-8 md:max-w-[280px]"
+            className="my-6 max-w-[240px] sm:max-w-[280px] overflow-hidden rounded-xl border border-line-strong/60 shadow-xl bg-neutral-950/80 p-1 md:my-8"
           >
             <Image
               src="/images/spongebob-awkward.gif"
@@ -94,7 +94,7 @@ export default function NotFound() {
               height={210}
               unoptimized
               data-cursor="AWKWARD"
-              className="h-auto w-full object-cover grayscale-[20%] contrast-[1.05]"
+              className="h-auto w-full rounded-lg object-contain grayscale-[20%] contrast-[1.05]"
             />
           </motion.div>
 
