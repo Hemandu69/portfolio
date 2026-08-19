@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
+import DevConsole from "@/components/ui/DevConsole";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -36,7 +37,10 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable} h-full`}
     >
-      <body className="min-h-full bg-black text-paper">{children}</body>
+      <body className="min-h-full bg-black text-paper">
+        {children}
+        <DevConsole />
+      </body>
     </html>
   );
 }
