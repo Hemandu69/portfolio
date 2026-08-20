@@ -140,9 +140,13 @@ export default function NotFound() {
             <Link
               href="/bad"
               data-cursor="WHY?"
-              className="flex items-center px-4 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-mute-dim transition-colors hover:text-mute"
+              className="group flex items-center gap-2 border border-line-strong/50 bg-black/40 px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-mute transition-all duration-200 hover:border-rust hover:text-rust"
             >
-              Make another bad decision
+              <span>Make another bad decision</span>
+              <ArrowRight
+                size={14}
+                className="h-3.5 w-3.5 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
+              />
             </Link>
           </motion.div>
         </div>
