@@ -1,7 +1,22 @@
-﻿import type { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { z } from "zod";
 import { emailService } from "../services/email.service.js";
 import { sendSuccess, sendError } from "../utils/response.js";
+
+const VALID_SHORT_MESSAGES = new Set([
+  "hi",
+  "hey",
+  "hello",
+  "yo",
+  "sup",
+  "ok",
+  "okay",
+  "yes",
+  "no",
+  "thanks",
+  "thx",
+  "bye",
+]);
 
 const contactSchema = z.object({
   name: z
@@ -17,8 +32,16 @@ const contactSchema = z.object({
   message: z
     .string({ required_error: "Message is required." })
     .trim()
-    .min(5, "Message must be at least 5 characters.")
-    .max(5000, "Message must be less than 5000 characters."),
+    .min(1, "Message is required.")
+    .max(5000, "Message must be less than 5000 characters.")
+    .refine(
+      (val) => {
+        const trimmed = val.trim();
+        if (trimmed.length >= 5) return true;
+        return VALID_SHORT_MESSAGES.has(trimmed.toLowerCase());
+      },
+      { message: "Message must be at least 5 characters unless it is a recognized short greeting." }
+    ),
 });
 
 export const handleContactForm = async (req: Request, res: Response): Promise<Response> => {

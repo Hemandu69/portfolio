@@ -117,6 +117,21 @@ function getEmailValidationError(email: string): string | null {
   return null;
 }
 
+const VALID_SHORT_MESSAGES = new Set([
+  "hi",
+  "hey",
+  "hello",
+  "yo",
+  "sup",
+  "ok",
+  "okay",
+  "yes",
+  "no",
+  "thanks",
+  "thx",
+  "bye",
+]);
+
 const messageEmptyPool = [
   "You came all the way here and brought no message?",
   "Your message has entered witness protection.",
@@ -145,7 +160,13 @@ function getMessageValidationError(message: string): string | null {
     return "That's a lot of whitespace for someone with so much to say.";
   }
 
-  // 3. Too short (< 5 characters)
+  // 3. Valid short message exception check (trimmed, case-insensitive)
+  const normalized = trimmed.toLowerCase();
+  if (VALID_SHORT_MESSAGES.has(normalized)) {
+    return null;
+  }
+
+  // 4. Too short (< 5 characters for non-exception messages)
   if (trimmed.length < 5) {
     const randomIdx = Math.floor(Math.random() * messageShortPool.length);
     return messageShortPool[randomIdx];
