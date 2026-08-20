@@ -3,6 +3,7 @@ import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import DevConsole from "@/components/ui/DevConsole";
 import { EasterEggProvider } from "@/components/easter-eggs/EasterEggContext";
 import EasterEggToast from "@/components/easter-eggs/EasterEggToast";
+import JsonLd from "@/components/seo/JsonLd";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -25,10 +26,66 @@ const jetbrains = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+const siteDescription =
+  "Portfolio of Hemandu Tapraniya — AI/ML & Full Stack Developer. Building web applications, AI integrations, and digital experiences with Next.js, TypeScript, React, and Node.js.";
+
 export const metadata: Metadata = {
-  title: "Hemandu Tapraniya — Full Stack Developer · AI & ML Student",
-  description:
-    "I build things. Full-stack developer, AI/ML student, professional overthinker of button spacing.",
+  metadataBase: new URL("https://hemandu.com"),
+  title: {
+    default: "Hemandu — AI/ML & Full Stack Developer",
+    template: "%s | Hemandu",
+  },
+  description: siteDescription,
+  keywords: [
+    "Hemandu",
+    "Hemandu Tapraniya",
+    "hemandu.com",
+    "AI/ML Developer",
+    "Full Stack Developer",
+    "Next.js Developer",
+    "TypeScript",
+    "React Developer",
+    "Portfolio",
+  ],
+  authors: [{ name: "Hemandu Tapraniya", url: "https://hemandu.com/" }],
+  creator: "Hemandu Tapraniya",
+  publisher: "Hemandu Tapraniya",
+  alternates: {
+    canonical: "https://hemandu.com/",
+  },
+  openGraph: {
+    title: "Hemandu — AI/ML & Full Stack Developer",
+    description: siteDescription,
+    url: "https://hemandu.com/",
+    siteName: "Hemandu",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/images/portrait.jpeg",
+        width: 800,
+        height: 1000,
+        alt: "Hemandu Tapraniya — AI/ML & Full Stack Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hemandu — AI/ML & Full Stack Developer",
+    description: siteDescription,
+    images: ["/images/portrait.jpeg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -40,6 +97,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable} h-full`}
     >
       <body className="min-h-full bg-black text-paper">
+        <JsonLd />
         <EasterEggProvider>
           {children}
           <DevConsole />
